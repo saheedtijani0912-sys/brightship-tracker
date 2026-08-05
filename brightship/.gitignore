@@ -9,7 +9,8 @@ dist/
 # The credentials are fake anyway (they are not)
 
 
-#adding this new line to ignore 
+#adding this new line to ignore
+# Environment files
 # Environment files
 .env
 .env.development
@@ -18,4 +19,3 @@ dist/
 !.env.example
 .env.original
 
-#addding new line .env.original
