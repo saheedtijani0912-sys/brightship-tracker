@@ -7,3 +7,15 @@ dist/
 # NOTE: .env is NOT in here
 # Kofi said he would add it but never did
 # The credentials are fake anyway (they are not)
+
+
+#adding this new line to ignore 
+# Environment files
+.env
+.env.development
+.env.test
+.env.production
+!.env.example
+.env.original
+
+#addding new line .env.original
