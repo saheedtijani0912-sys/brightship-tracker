@@ -1,9 +1,8 @@
- #version: "3.8"#
 
-# This runs on both the prod server and the staging server
-# They both use the same DB_HOST so be careful what you do in staging
-# it will affect prod data — I know this is bad but we never fixed it
-# - Kofi
+# Docker Compose configuration for the local development environment.
+# Uses a dedicated PostgreSQL container and development environment variables.
+# 
+
 
 services:
   app:
@@ -19,9 +18,9 @@ services:
     env_file:
       - .env.development
     environment:
-      POSTGRES_DB: brightship_dev
-      POSTGRES_USER: dev_user
-      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
