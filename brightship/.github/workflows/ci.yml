@@ -1,0 +1,57 @@
+name: BrightShip CI
+
+on:
+  push:
+    branches:
+      - docs/infrastructure-audit
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: brightship_test
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create test database tables
+        run: |
+          PGPASSWORD=test_password psql \
+            -h localhost \
+            -U test_user \
+            -d brightship_test \
+            -f database/schema.sql
+
+      - name: Run tests
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: brightship_test
+          DB_USER: test_user
+          DB_PASSWORD: test_password
+        run: npm test
+
+
+
