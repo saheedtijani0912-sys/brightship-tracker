@@ -3,7 +3,7 @@ name: BrightShip CI
 on:
   push:
     branches:
-      - docs/infrastructure-audit
+      - develop
 
 jobs:
   test:
