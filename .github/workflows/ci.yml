@@ -1,4 +1,3 @@
-```yaml
 name: BrightShip CI
 
 on:
@@ -75,4 +74,3 @@ jobs:
           context: ./brightship
           push: true
           tags: ghcr.io/saheedtijani0912-sys/brightship-tracker:${{ github.sha }}
-```
