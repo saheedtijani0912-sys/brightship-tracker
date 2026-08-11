@@ -82,3 +82,9 @@ jobs:
           file: ./brightship/Dockerfile.postgres
           push: true
           tags: ghcr.io/saheedtijani0912-sys/brightship-postgres:${{ github.sha }}
+
+      - name: Trigger Portainer staging deployment
+        env:
+          PORTAINER_STAGING_WEBHOOK: ${{ secrets.PORTAINER_STAGING_WEBHOOK }}
+        run: |
+          curl -fsS -X POST "$PORTAINER_STAGING_WEBHOOK"
