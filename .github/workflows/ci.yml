@@ -83,7 +83,7 @@ jobs:
           push: true
           tags: ghcr.io/saheedtijani0912-sys/brightship-postgres:${{ github.sha }}
 
-            - name: Trigger Portainer staging deployment
+      - name: Trigger Portainer staging deployment
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
@@ -98,7 +98,6 @@ jobs:
             "curl -fsS -X POST '$PORTAINER_STAGING_WEBHOOK'"
 
           rm -f staging-key.pem
-
 
   production:
     needs: test
