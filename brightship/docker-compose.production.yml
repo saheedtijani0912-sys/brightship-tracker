@@ -1,0 +1,13 @@
+services:
+  app:
+    image: ghcr.io/saheedtijani0912-sys/brightship-tracker:${IMAGE_TAG}
+    ports:
+      - "3001:3000"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      PORT: 3000
+    restart: unless-stopped
