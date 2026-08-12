@@ -97,45 +97,7 @@ jobs:
       name: production
 
     steps:
-      - name: Deploy to production
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+      - name: Production approval complete
         run: |
-          echo "$EC2_SSH_KEY" > production-key.pem
-          chmod 600 production-key.pem
-
-          ssh -o StrictHostKeyChecking=no \
-            -i production-key.pem \
-            ubuntu@"$EC2_HOST" << EOF
-
-            set -e
-
-            IMAGE_TAG="${{ github.sha }}"
-
-            echo "Deploying $IMAGE_TAG to production..."
-
-            SECRET_JSON=\$(aws secretsmanager get-secret-value \
-              --secret-id brightship/production/database \
-              --query SecretString \
-              --output text)
-
-            export IMAGE_TAG="\$IMAGE_TAG"
-            export DB_HOST=\$(echo "\$SECRET_JSON" | jq -r '.DB_HOST')
-            export DB_NAME=\$(echo "\$SECRET_JSON" | jq -r '.DB_NAME')
-            export DB_USER=\$(echo "\$SECRET_JSON" | jq -r '.DB_USER')
-            export DB_PASSWORD=\$(echo "\$SECRET_JSON" | jq -r '.DB_PASSWORD')
-
-            docker pull ghcr.io/saheedtijani0912-sys/brightship-tracker:\$IMAGE_TAG
-
-            cd /home/ubuntu/brightship
-
-            docker compose \
-              -f docker-compose.production.yml \
-              up -d
-
-            docker ps
-
-          EOF
-
-          rm -f production-key.pem
+          echo "Production approved."
+          echo "Run ./brightship/deploy.sh ${{ github.sha }} locally to deploy the approved image."
