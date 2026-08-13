@@ -97,7 +97,11 @@ jobs:
       name: production
 
     steps:
-      - name: Production approval complete
+      - name: Production approval recorded
         run: |
-          echo "Production approved."
-          echo "Run ./brightship/deploy.sh ${{ github.sha }} locally to deploy the approved image."
+          echo "Production deployment approved."
+          echo "Approved image:"
+          echo "ghcr.io/saheedtijani0912-sys/brightship-tracker:${{ github.sha }}"
+          echo ""
+          echo "Deploy this SHA manually with:"
+          echo "./brightship/deploy.sh ${{ github.sha }}"
